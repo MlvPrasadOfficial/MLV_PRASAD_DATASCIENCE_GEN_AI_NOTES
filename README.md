@@ -36,7 +36,7 @@ Welcome to your comprehensive data science and AI learning journey! This reposit
 ## 📚 Learning Paths
 
 ### 🐍 [01. Python for Data Science](./syllabus/01_python-syllabus.md)
-**Duration**: 16 weeks | **Level**: Beginner to Advanced
+**Level**: Beginner to Advanced
 
 Master Python programming specifically for data science applications, covering everything from basic syntax to advanced libraries and deployment strategies.
 
@@ -51,7 +51,7 @@ Master Python programming specifically for data science applications, covering e
 ---
 
 ### 🗄️ [02. SQL for Data Science](./syllabus/02_sql-syllabus.md)
-**Duration**: 16 weeks | **Level**: Beginner to Advanced
+**Level**: Beginner to Advanced
 
 Comprehensive SQL training from basic queries to advanced analytics, with focus on data science applications and modern database technologies.
 
@@ -66,7 +66,7 @@ Comprehensive SQL training from basic queries to advanced analytics, with focus 
 ---
 
 ### 🤖 [03. Machine Learning](./syllabus/03_ml-syllabus.md)
-**Duration**: 16 weeks | **Level**: Intermediate to Advanced
+**Level**: Intermediate to Advanced
 
 Complete machine learning curriculum covering supervised, unsupervised, and reinforcement learning with practical implementation and deployment.
 
@@ -81,7 +81,7 @@ Complete machine learning curriculum covering supervised, unsupervised, and rein
 ---
 
 ### 🧠 [04. Neural Networks & Deep Learning](./syllabus/04_neural-networks-syllabus.md)
-**Duration**: 16 weeks | **Level**: Advanced
+**Level**: Advanced
 
 Deep dive into neural networks from basic perceptrons to state-of-the-art architectures like Transformers and modern generative models.
 
@@ -96,7 +96,7 @@ Deep dive into neural networks from basic perceptrons to state-of-the-art archit
 ---
 
 ### 💬 [05. Natural Language Processing](./syllabus/05_nlp-syllabus.md)
-**Duration**: 16 weeks | **Level**: Advanced
+**Level**: Advanced
 
 Comprehensive NLP curriculum from text processing basics to modern transformer models and practical applications.
 
@@ -111,7 +111,7 @@ Comprehensive NLP curriculum from text processing basics to modern transformer m
 ---
 
 ### 🎨 [06. Generative AI](./syllabus/06_generative-ai-syllabus.md)
-**Duration**: 16 weeks | **Level**: Advanced
+**Level**: Advanced
 
 Cutting-edge generative AI covering GANs, diffusion models, large language models, and practical applications with ethical considerations.
 
@@ -128,7 +128,7 @@ Cutting-edge generative AI covering GANs, diffusion models, large language model
 ## 🔧 Core Libraries & Tools
 
 ### 🔢 [07. NumPy](./syllabus/07_numpy-syllabus.md)
-**Duration**: 16 weeks | **Level**: Beginner to Intermediate
+**Level**: Beginner to Intermediate
 
 Master NumPy, the foundational library for numerical computing in Python, essential for efficient array operations and mathematical computations.
 
@@ -143,7 +143,7 @@ Master NumPy, the foundational library for numerical computing in Python, essent
 ---
 
 ### 📊 [08. Pandas](./syllabus/08_pandas-syllabus.md)
-**Duration**: 16 weeks | **Level**: Beginner to Intermediate
+**Level**: Beginner to Intermediate
 
 Complete guide to Pandas for data manipulation, cleaning, and analysis with Series and DataFrame structures.
 
@@ -158,7 +158,7 @@ Complete guide to Pandas for data manipulation, cleaning, and analysis with Seri
 ---
 
 ### 📈 [09. Matplotlib](./syllabus/09_matplotlib-syllabus.md)
-**Duration**: 16 weeks | **Level**: Beginner to Intermediate
+**Level**: Beginner to Intermediate
 
 Comprehensive Matplotlib training for creating publication-quality visualizations and data plots in Python.
 
@@ -173,7 +173,7 @@ Comprehensive Matplotlib training for creating publication-quality visualization
 ---
 
 ### 🎨 [10. Seaborn](./syllabus/10_seaborn-syllabus.md)
-**Duration**: 16 weeks | **Level**: Intermediate
+**Level**: Intermediate
 
 Statistical data visualization with Seaborn, building on Matplotlib for elegant and informative graphics.
 
@@ -188,7 +188,7 @@ Statistical data visualization with Seaborn, building on Matplotlib for elegant 
 ---
 
 ### 🧮 [11. SciPy](./syllabus/11_scipy-syllabus.md)
-**Duration**: 16 weeks | **Level**: Intermediate to Advanced
+**Level**: Intermediate to Advanced
 
 Scientific computing with SciPy covering advanced mathematical algorithms, optimization, and statistical methods.
 
@@ -205,7 +205,7 @@ Scientific computing with SciPy covering advanced mathematical algorithms, optim
 ## 🔥 Deep Learning & LLM Frameworks
 
 ### 🔥 [12. PyTorch](./syllabus/12_pytorch-syllabus.md)
-**Duration**: 24 weeks | **Level**: Intermediate to Advanced
+**Level**: Intermediate to Advanced
 
 Master PyTorch, the leading deep learning framework, from tensor operations to production deployment of neural networks.
 
@@ -220,7 +220,7 @@ Master PyTorch, the leading deep learning framework, from tensor operations to p
 ---
 
 ### 🦜 [13. LangChain](./syllabus/13_langchain-syllabus.md)
-**Duration**: 26 weeks | **Level**: Intermediate to Advanced
+**Level**: Intermediate to Advanced
 
 Build production-ready LLM applications with LangChain, covering RAG systems, agents, and conversational AI.
 
@@ -235,7 +235,7 @@ Build production-ready LLM applications with LangChain, covering RAG systems, ag
 ---
 
 ### 🔬 [14. LangSmith](./syllabus/14_langsmith-syllabus.md)
-**Duration**: 26 weeks | **Level**: Intermediate to Advanced
+**Level**: Intermediate to Advanced
 
 Master LLM observability with LangSmith for debugging, evaluation, and monitoring of AI applications.
 
@@ -608,7 +608,6 @@ Choose your starting point and begin building your data science and AI expertise
 
 📊 **Repository Statistics**
 - **Syllabi**: 14 comprehensive curricula
-- **Total Duration**: 252+ weeks of structured learning
 - **Topics Covered**: 500+ specific learning objectives
 - **Projects**: 110+ hands-on implementations
 - **Technologies**: 200+ tools and libraries covered
