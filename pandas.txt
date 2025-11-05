@@ -1,0 +1,1117 @@
+# Pandas - Complete Functions Reference Guide
+
+================================================================================
+                        PANDAS CORE FUNCTIONALITY
+================================================================================
+
+## IMPORTING PANDAS
+import pandas as pd
+import numpy as np
+
+================================================================================
+                        1. DATA STRUCTURES
+================================================================================
+
+### SERIES CREATION
+pd.Series(data, index=None, dtype=None, name=None)
+pd.Series([1, 2, 3, 4])
+pd.Series({'a': 1, 'b': 2, 'c': 3})
+pd.Series(np.array([1, 2, 3]))
+
+### DATAFRAME CREATION
+pd.DataFrame(data, index=None, columns=None, dtype=None)
+pd.DataFrame({'col1': [1, 2], 'col2': [3, 4]})
+pd.DataFrame(np.array([[1, 2], [3, 4]]), columns=['A', 'B'])
+pd.DataFrame.from_dict(dict_data, orient='columns')
+pd.DataFrame.from_records(records)
+
+================================================================================
+                        2. DATA INPUT/OUTPUT
+================================================================================
+
+### READING DATA
+pd.read_csv(filepath, sep=',', header='infer', index_col=None, usecols=None, dtype=None)
+pd.read_excel(filepath, sheet_name=0, header=0, index_col=None)
+pd.read_json(filepath, orient='columns', dtype=None)
+pd.read_html(url)
+pd.read_sql(sql, con, index_col=None, columns=None)
+pd.read_sql_query(sql, con)
+pd.read_sql_table(table_name, con)
+pd.read_parquet(filepath)
+pd.read_feather(filepath)
+pd.read_hdf(filepath, key)
+pd.read_pickle(filepath)
+pd.read_clipboard()
+pd.read_fwf(filepath)  # Fixed-width formatted lines
+
+### WRITING DATA
+df.to_csv(filepath, sep=',', index=True, header=True, mode='w')
+df.to_excel(filepath, sheet_name='Sheet1', index=True)
+df.to_json(filepath, orient='columns', indent=None)
+df.to_html(filepath)
+df.to_sql(name, con, if_exists='fail', index=True)
+df.to_parquet(filepath)
+df.to_feather(filepath)
+df.to_hdf(filepath, key, mode='w')
+df.to_pickle(filepath)
+df.to_clipboard()
+df.to_dict(orient='dict')
+df.to_records()
+df.to_string()
+df.to_latex()
+df.to_markdown()
+
+================================================================================
+                        3. VIEWING DATA
+================================================================================
+
+### INSPECTION
+df.head(n=5)
+df.tail(n=5)
+df.sample(n=5, frac=None, random_state=None)
+df.info(verbose=True, memory_usage='deep')
+df.describe(include='all', percentiles=None)
+df.shape
+df.size
+df.ndim
+df.dtypes
+df.columns
+df.index
+df.values
+df.axes
+df.empty
+df.memory_usage(deep=False)
+
+### DISPLAY OPTIONS
+pd.set_option('display.max_rows', 100)
+pd.set_option('display.max_columns', 100)
+pd.set_option('display.width', 1000)
+pd.set_option('display.max_colwidth', 50)
+pd.reset_option('all')
+pd.get_option('display.max_rows')
+
+================================================================================
+                        4. SELECTION & INDEXING
+================================================================================
+
+### COLUMN SELECTION
+df['column_name']
+df[['col1', 'col2']]
+df.column_name  # Attribute access
+
+### ROW SELECTION
+df[0:5]  # Slice rows
+df[df['column'] > 5]  # Boolean indexing
+
+### LOC - LABEL-BASED INDEXING
+df.loc[row_label]
+df.loc[row_label, column_label]
+df.loc[row_labels, column_labels]
+df.loc[:, 'column']
+df.loc[df['col'] > 5, ['col1', 'col2']]
+
+### ILOC - INTEGER-BASED INDEXING
+df.iloc[0]
+df.iloc[0, 1]
+df.iloc[0:5]
+df.iloc[0:5, 0:3]
+df.iloc[:, 0:2]
+df.iloc[[0, 2, 4], [1, 3]]
+
+### AT & IAT - FAST SCALAR ACCESS
+df.at[row_label, column_label]
+df.iat[row_index, column_index]
+
+### QUERY
+df.query('column > 5')
+df.query('column1 > 5 and column2 < 10')
+df.query('column in @list_variable')
+
+### WHERE & MASK
+df.where(condition, other=nan)
+df.mask(condition, other=nan)
+
+### FILTER
+df.filter(items=['col1', 'col2'])
+df.filter(like='_total')
+df.filter(regex='^col')
+df.filter(axis=0, like='row')
+
+### SELECT_DTYPES
+df.select_dtypes(include=['int64', 'float64'])
+df.select_dtypes(exclude=['object'])
+
+================================================================================
+                        5. DATA CLEANING
+================================================================================
+
+### MISSING DATA
+df.isna()
+df.isnull()
+df.notna()
+df.notnull()
+df.dropna(axis=0, how='any', thresh=None, subset=None, inplace=False)
+df.fillna(value, method=None, axis=None, inplace=False, limit=None)
+df.ffill()  # Forward fill
+df.bfill()  # Backward fill
+df.interpolate(method='linear', axis=0, limit=None)
+df.replace(to_replace, value, inplace=False, regex=False)
+
+### DUPLICATES
+df.duplicated(subset=None, keep='first')
+df.drop_duplicates(subset=None, keep='first', inplace=False)
+
+### DROPPING
+df.drop(labels, axis=0, inplace=False)
+df.drop(columns=['col1', 'col2'])
+df.drop(index=['row1', 'row2'])
+df.drop_duplicates()
+
+### RENAMING
+df.rename(columns={'old': 'new'}, index={'old': 'new'}, inplace=False)
+df.rename(str.lower, axis='columns')
+df.rename_axis('new_name', axis=0)
+df.set_axis(['new1', 'new2'], axis=1)
+
+### DATA TYPES
+df.astype(dtype, copy=True, errors='raise')
+df['col'].astype('int64')
+pd.to_numeric(df['col'], errors='coerce', downcast='integer')
+pd.to_datetime(df['col'], format=None, errors='coerce')
+pd.to_timedelta(df['col'], unit='D', errors='coerce')
+
+### STRING OPERATIONS
+df['col'].str.lower()
+df['col'].str.upper()
+df['col'].str.title()
+df['col'].str.capitalize()
+df['col'].str.strip()
+df['col'].str.lstrip()
+df['col'].str.rstrip()
+df['col'].str.replace('old', 'new', regex=False)
+df['col'].str.contains('pattern', regex=True)
+df['col'].str.startswith('prefix')
+df['col'].str.endswith('suffix')
+df['col'].str.split('delimiter', expand=False)
+df['col'].str.cat(sep=', ')
+df['col'].str.extract(r'(\d+)')
+df['col'].str.findall(r'\d+')
+df['col'].str.len()
+df['col'].str.slice(start, stop)
+df['col'].str.get(index)
+df['col'].str.pad(width, side='left', fillchar=' ')
+df['col'].str.zfill(width)
+df['col'].str.wrap(width)
+
+================================================================================
+                        6. DATA MANIPULATION
+================================================================================
+
+### SORTING
+df.sort_values(by, axis=0, ascending=True, inplace=False, kind='quicksort', na_position='last')
+df.sort_index(axis=0, ascending=True, inplace=False)
+df.nlargest(n, columns)
+df.nsmallest(n, columns)
+
+### RANKING
+df.rank(axis=0, method='average', numeric_only=False, na_option='keep', ascending=True)
+
+### APPLYING FUNCTIONS
+df.apply(func, axis=0, raw=False, args=())
+df.applymap(func)  # Element-wise for DataFrame
+df['col'].apply(lambda x: x * 2)
+df['col'].map(dict_or_series)
+df.pipe(func, *args, **kwargs)
+df.transform(func, axis=0)
+
+### AGGREGATION
+df.agg(func, axis=0)
+df.agg(['sum', 'mean', 'std'])
+df.agg({'col1': 'sum', 'col2': 'mean'})
+
+### GROUPING
+df.groupby(by, axis=0, level=None, as_index=True, sort=True, group_keys=True, observed=False)
+df.groupby('col').sum()
+df.groupby('col').mean()
+df.groupby('col').count()
+df.groupby('col').size()
+df.groupby('col').first()
+df.groupby('col').last()
+df.groupby('col').min()
+df.groupby('col').max()
+df.groupby('col').std()
+df.groupby('col').var()
+df.groupby('col').median()
+df.groupby('col').quantile(q=0.5)
+df.groupby('col').agg(['sum', 'mean', 'std'])
+df.groupby('col').agg({'col1': 'sum', 'col2': 'mean'})
+df.groupby('col').filter(lambda x: len(x) > 5)
+df.groupby('col').transform(lambda x: (x - x.mean()) / x.std())
+df.groupby('col').nth(n)
+
+### PIVOT & RESHAPE
+df.pivot(index=None, columns=None, values=None)
+df.pivot_table(values=None, index=None, columns=None, aggfunc='mean', fill_value=None, margins=False)
+df.melt(id_vars=None, value_vars=None, var_name='variable', value_name='value')
+df.stack(level=-1, dropna=True)
+df.unstack(level=-1, fill_value=None)
+pd.crosstab(index, columns, values=None, aggfunc=None, margins=False, normalize=False)
+pd.cut(x, bins, labels=None, right=True, include_lowest=False)
+pd.qcut(x, q, labels=None, duplicates='raise')
+
+### MERGING & JOINING
+pd.merge(left, right, how='inner', on=None, left_on=None, right_on=None, left_index=False, right_index=False, suffixes=('_x', '_y'))
+pd.merge_ordered(left, right, on=None, left_on=None, right_on=None, how='outer', fill_method=None)
+pd.merge_asof(left, right, on=None, left_on=None, right_on=None, by=None, tolerance=None, direction='backward')
+df.join(other, on=None, how='left', lsuffix='', rsuffix='')
+
+### CONCATENATING
+pd.concat(objs, axis=0, join='outer', ignore_index=False, keys=None, sort=False)
+pd.concat([df1, df2], axis=0)
+pd.concat([df1, df2], axis=1)
+
+### COMBINING
+df.append(other, ignore_index=False, verify_integrity=False, sort=False)
+df.combine(other, func)
+df.combine_first(other)
+df.update(other, join='left', overwrite=True, filter_func=None)
+
+================================================================================
+                        7. STATISTICAL FUNCTIONS
+================================================================================
+
+### DESCRIPTIVE STATISTICS
+df.count()
+df.sum(axis=0, skipna=True, numeric_only=False)
+df.mean(axis=0, skipna=True, numeric_only=False)
+df.median(axis=0, skipna=True, numeric_only=False)
+df.mode(axis=0, numeric_only=False)
+df.std(axis=0, skipna=True, ddof=1)
+df.var(axis=0, skipna=True, ddof=1)
+df.min(axis=0, skipna=True, numeric_only=False)
+df.max(axis=0, skipna=True, numeric_only=False)
+df.abs()
+df.prod(axis=0, skipna=True)
+df.cumsum(axis=0, skipna=True)
+df.cumprod(axis=0, skipna=True)
+df.cummin(axis=0, skipna=True)
+df.cummax(axis=0, skipna=True)
+df.quantile(q=0.5, axis=0)
+df.sem(axis=0, skipna=True, ddof=1)  # Standard error of mean
+df.skew(axis=0, skipna=True)
+df.kurt(axis=0, skipna=True)
+df.mad(axis=0, skipna=True)  # Mean absolute deviation
+
+### CORRELATION & COVARIANCE
+df.corr(method='pearson', min_periods=1)
+df.corrwith(other, axis=0, drop=False, method='pearson')
+df.cov(min_periods=None, ddof=1)
+
+### RANKING & COMPARISON
+df.rank(axis=0, method='average', numeric_only=False, ascending=True)
+df.pct_change(periods=1, fill_method='pad', axis=0)
+df.diff(periods=1, axis=0)
+df.clip(lower=None, upper=None, axis=None, inplace=False)
+df.round(decimals=0)
+
+### VALUE COUNTS
+df['col'].value_counts(normalize=False, sort=True, ascending=False, bins=None, dropna=True)
+df['col'].unique()
+df['col'].nunique(dropna=True)
+
+================================================================================
+                        8. TIME SERIES
+================================================================================
+
+### DATE/TIME CREATION
+pd.to_datetime(arg, format=None, errors='raise', dayfirst=False, yearfirst=False)
+pd.date_range(start=None, end=None, periods=None, freq='D', tz=None, normalize=False)
+pd.period_range(start=None, end=None, periods=None, freq='D')
+pd.timedelta_range(start=None, end=None, periods=None, freq='D')
+
+### DATETIME PROPERTIES
+df['date'].dt.year
+df['date'].dt.month
+df['date'].dt.day
+df['date'].dt.hour
+df['date'].dt.minute
+df['date'].dt.second
+df['date'].dt.microsecond
+df['date'].dt.nanosecond
+df['date'].dt.date
+df['date'].dt.time
+df['date'].dt.dayofweek
+df['date'].dt.day_name()
+df['date'].dt.month_name()
+df['date'].dt.weekday
+df['date'].dt.quarter
+df['date'].dt.is_leap_year
+df['date'].dt.days_in_month
+df['date'].dt.tz
+df['date'].dt.tz_localize(tz)
+df['date'].dt.tz_convert(tz)
+
+### RESAMPLING
+df.resample(rule, axis=0, closed='right', label='right', on=None, level=None)
+df.resample('D').sum()
+df.resample('W').mean()
+df.resample('M').count()
+df.resample('Q').first()
+df.resample('Y').last()
+
+### ROLLING WINDOWS
+df.rolling(window, min_periods=None, center=False, win_type=None, axis=0)
+df.rolling(window=7).mean()
+df.rolling(window=7).sum()
+df.rolling(window=7).std()
+df.rolling(window=7).var()
+df.rolling(window=7).min()
+df.rolling(window=7).max()
+df.rolling(window=7).median()
+df.rolling(window=7).quantile(q)
+df.rolling(window=7).apply(func)
+
+### EXPANDING WINDOWS
+df.expanding(min_periods=1, center=False, axis=0)
+df.expanding().sum()
+df.expanding().mean()
+
+### EXPONENTIAL WEIGHTED
+df.ewm(com=None, span=None, halflife=None, alpha=None, min_periods=0, adjust=True, axis=0)
+df.ewm(span=10).mean()
+
+### SHIFTING
+df.shift(periods=1, freq=None, axis=0, fill_value=None)
+df.tshift(periods=1, freq=None, axis=0)
+df.asfreq(freq, method=None, fill_value=None)
+
+================================================================================
+                        9. CATEGORICAL DATA
+================================================================================
+
+### CATEGORICAL CREATION
+pd.Categorical(values, categories=None, ordered=False, dtype=None)
+df['col'].astype('category')
+pd.CategoricalDtype(categories=None, ordered=False)
+
+### CATEGORICAL OPERATIONS
+df['col'].cat.categories
+df['col'].cat.ordered
+df['col'].cat.codes
+df['col'].cat.rename_categories(new_categories)
+df['col'].cat.reorder_categories(new_categories, ordered=None)
+df['col'].cat.add_categories(new_categories)
+df['col'].cat.remove_categories(removals)
+df['col'].cat.remove_unused_categories()
+df['col'].cat.set_categories(new_categories, ordered=None, rename=False)
+df['col'].cat.as_ordered()
+df['col'].cat.as_unordered()
+
+================================================================================
+                        10. MULTI-INDEX
+================================================================================
+
+### CREATING MULTI-INDEX
+pd.MultiIndex.from_arrays(arrays, names=None)
+pd.MultiIndex.from_tuples(tuples, names=None)
+pd.MultiIndex.from_product(iterables, names=None)
+pd.MultiIndex.from_frame(df)
+df.set_index(['col1', 'col2'])
+
+### MULTI-INDEX OPERATIONS
+df.index.levels
+df.index.names
+df.index.get_level_values(level)
+df.swaplevel(i=-2, j=-1, axis=0)
+df.reorder_levels(order, axis=0)
+df.reset_index(level=None, drop=False, inplace=False)
+df.xs(key, axis=0, level=None, drop_level=True)
+df.droplevel(level, axis=0)
+
+================================================================================
+                        11. SQL WINDOW FUNCTIONS IN PANDAS
+================================================================================
+
+# SQL Window Functions - Complete Pandas Equivalents
+
+### 1. ROW_NUMBER() - Sequential numbering within partition
+# SQL: ROW_NUMBER() OVER (PARTITION BY group ORDER BY value)
+df['row_number'] = df.groupby('group').cumcount() + 1
+df['row_number'] = df.groupby('group')['value'].rank(method='first')
+
+### 2. RANK() - Rank with gaps for ties
+# SQL: RANK() OVER (PARTITION BY group ORDER BY value DESC)
+df['rank'] = df.groupby('group')['value'].rank(method='min', ascending=False)
+
+### 3. DENSE_RANK() - Rank without gaps for ties
+# SQL: DENSE_RANK() OVER (PARTITION BY group ORDER BY value)
+df['dense_rank'] = df.groupby('group')['value'].rank(method='dense')
+
+### 4. NTILE() - Divide rows into n buckets
+# SQL: NTILE(4) OVER (PARTITION BY group ORDER BY value)
+df['quartile'] = df.groupby('group')['value'].apply(lambda x: pd.qcut(x, q=4, labels=False, duplicates='drop'))
+df['ntile'] = df.groupby('group')['value'].rank(method='first').apply(lambda x: pd.cut(x, bins=4, labels=False))
+
+### 5. LAG() - Access previous row value
+# SQL: LAG(value, 1) OVER (PARTITION BY group ORDER BY date)
+df['lag_1'] = df.groupby('group')['value'].shift(1)
+df['lag_2'] = df.groupby('group')['value'].shift(2)
+df['lag_n'] = df.groupby('group')['value'].shift(n)
+
+### 6. LEAD() - Access next row value
+# SQL: LEAD(value, 1) OVER (PARTITION BY group ORDER BY date)
+df['lead_1'] = df.groupby('group')['value'].shift(-1)
+df['lead_2'] = df.groupby('group')['value'].shift(-2)
+df['lead_n'] = df.groupby('group')['value'].shift(-n)
+
+### 7. FIRST_VALUE() - First value in window
+# SQL: FIRST_VALUE(value) OVER (PARTITION BY group ORDER BY date)
+df['first_value'] = df.groupby('group')['value'].transform('first')
+df['first_value'] = df.groupby('group')['value'].transform(lambda x: x.iloc[0])
+
+### 8. LAST_VALUE() - Last value in window
+# SQL: LAST_VALUE(value) OVER (PARTITION BY group ORDER BY date)
+df['last_value'] = df.groupby('group')['value'].transform('last')
+df['last_value'] = df.groupby('group')['value'].transform(lambda x: x.iloc[-1])
+
+### 9. NTH_VALUE() - Nth value in window
+# SQL: NTH_VALUE(value, 3) OVER (PARTITION BY group ORDER BY date)
+df['nth_value'] = df.groupby('group')['value'].transform(lambda x: x.iloc[2] if len(x) > 2 else None)
+df['nth_value'] = df.groupby('group')['value'].nth(2)
+
+### 10. PERCENT_RANK() - Relative rank (0 to 1)
+# SQL: PERCENT_RANK() OVER (PARTITION BY group ORDER BY value)
+df['percent_rank'] = df.groupby('group')['value'].rank(pct=True)
+
+### 11. CUME_DIST() - Cumulative distribution (0 to 1)
+# SQL: CUME_DIST() OVER (PARTITION BY group ORDER BY value)
+df['cume_dist'] = df.groupby('group')['value'].rank(method='max', pct=True)
+
+
+### CUMULATIVE WINDOW FUNCTIONS
+# SQL: SUM(value) OVER (PARTITION BY group ORDER BY date)
+df['cumsum'] = df.groupby('group')['value'].cumsum()
+df['cumprod'] = df.groupby('group')['value'].cumprod()
+df['cummin'] = df.groupby('group')['value'].cummin()
+df['cummax'] = df.groupby('group')['value'].cummax()
+df['cumcount'] = df.groupby('group').cumcount()
+
+### AGGREGATE WINDOW FUNCTIONS
+# SQL: AVG(value) OVER (PARTITION BY group)
+df['avg_over'] = df.groupby('group')['value'].transform('mean')
+df['sum_over'] = df.groupby('group')['value'].transform('sum')
+df['count_over'] = df.groupby('group')['value'].transform('count')
+df['min_over'] = df.groupby('group')['value'].transform('min')
+df['max_over'] = df.groupby('group')['value'].transform('max')
+df['std_over'] = df.groupby('group')['value'].transform('std')
+
+### ROLLING WINDOW FUNCTIONS - DIFFERENT FRAME SPECIFICATIONS
+
+## 1. ROWS FRAME - Physical row-based windows
+# SQL: AVG(value) OVER (PARTITION BY group ORDER BY date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW)
+df['rows_avg_3'] = df.groupby('group')['value'].rolling(window=3, min_periods=1).mean().reset_index(0, drop=True)
+df['rows_sum_3'] = df.groupby('group')['value'].rolling(window=3).sum().reset_index(0, drop=True)
+
+# SQL: SUM(value) OVER (ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
+df['rows_cumsum'] = df['value'].expanding().sum()
+
+# SQL: AVG(value) OVER (ORDER BY date ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING)
+df['rows_centered_avg'] = df['value'].rolling(window=3, center=True).mean()
+
+# SQL: SUM(value) OVER (ORDER BY date ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING)
+df['rows_reverse_cumsum'] = df['value'][::-1].expanding().sum()[::-1]
+
+# SQL: MAX(value) OVER (PARTITION BY group ORDER BY date ROWS BETWEEN 5 PRECEDING AND CURRENT ROW)
+df['rows_max_6'] = df.groupby('group')['value'].rolling(window=6, min_periods=1).max().reset_index(0, drop=True)
+
+## 2. RANGE FRAME - Logical value-based windows (time/date ranges)
+# SQL: AVG(value) OVER (PARTITION BY group ORDER BY date RANGE BETWEEN INTERVAL '7' DAY PRECEDING AND CURRENT ROW)
+df_sorted = df.sort_values('date')
+df_sorted['range_avg_7d'] = df_sorted.groupby('group')['value'].rolling(window='7D', on='date').mean().reset_index(0, drop=True)
+
+# SQL: SUM(amount) OVER (ORDER BY date RANGE BETWEEN INTERVAL '1' MONTH PRECEDING AND CURRENT ROW)
+df['range_sum_1m'] = df.groupby('group')['amount'].rolling(window='30D', on='date').sum().reset_index(0, drop=True)
+
+# SQL: COUNT(*) OVER (ORDER BY timestamp RANGE BETWEEN INTERVAL '1' HOUR PRECEDING AND CURRENT ROW)
+df['range_count_1h'] = df.rolling(window='1H', on='timestamp')['id'].count()
+
+# SQL: AVG(value) OVER (PARTITION BY group ORDER BY price RANGE BETWEEN 10 PRECEDING AND 10 FOLLOWING)
+# Note: Pandas doesn't support value-based RANGE directly, use window function alternative
+df['range_value_window'] = df.groupby('group').apply(
+    lambda x: x['value'].rolling(window=21, center=True, min_periods=1).mean()
+).reset_index(0, drop=True)
+
+## 3. GROUPS FRAME - Peer group-based windows
+# SQL: SUM(value) OVER (PARTITION BY category ORDER BY rank GROUPS BETWEEN 1 PRECEDING AND 1 FOLLOWING)
+# Groups considers ties in ORDER BY as single group
+df['groups_sum'] = df.groupby(['category', 'rank'])['value'].transform('sum')
+
+# SQL: AVG(value) OVER (ORDER BY score GROUPS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
+df['groups_cumavg'] = df.groupby('score')['value'].expanding().mean()
+
+## 4. FRAME SPECIFICATIONS - Detailed Examples
+
+# UNBOUNDED PRECEDING to CURRENT ROW (default for cumulative)
+df['frame_unbounded_current'] = df.groupby('group')['value'].expanding().sum().reset_index(0, drop=True)
+
+# N PRECEDING to CURRENT ROW
+df['frame_3_preceding_current'] = df.groupby('group')['value'].rolling(window=4, min_periods=1).sum().reset_index(0, drop=True)
+
+# CURRENT ROW to N FOLLOWING
+df['frame_current_2_following'] = df.groupby('group')['value'].shift(-2).rolling(window=3).sum()
+
+# N PRECEDING to N FOLLOWING (centered window)
+df['frame_2_prec_2_foll'] = df.groupby('group')['value'].rolling(window=5, center=True, min_periods=1).mean().reset_index(0, drop=True)
+
+# UNBOUNDED PRECEDING to UNBOUNDED FOLLOWING (entire partition)
+df['frame_unbounded_both'] = df.groupby('group')['value'].transform('sum')
+
+# CURRENT ROW ONLY
+df['frame_current_only'] = df['value']  # No window function needed
+
+## 5. ADVANCED FRAME EXAMPLES
+
+# Moving average with minimum periods
+df['ma_min_periods'] = df.groupby('group')['value'].rolling(window=5, min_periods=3).mean().reset_index(0, drop=True)
+
+# Exponential weighted moving average (time decay)
+df['ewma_span'] = df.groupby('group')['value'].transform(lambda x: x.ewm(span=5).mean())
+
+# Forward-looking window (next N rows)
+df['forward_sum_3'] = df.groupby('group')['value'].shift(-2).rolling(window=3).sum()
+
+# Backward-looking window (previous N rows only)
+df['backward_sum_3'] = df.groupby('group')['value'].rolling(window=3, min_periods=3).sum().reset_index(0, drop=True)
+
+# Weighted moving average
+weights = np.array([0.1, 0.2, 0.3, 0.4])
+df['weighted_ma'] = df.groupby('group')['value'].rolling(window=4).apply(lambda x: np.sum(weights * x), raw=True).reset_index(0, drop=True)
+
+# Time-based rolling with offset
+df['offset_7d_sum'] = df.groupby('group')['value'].rolling(window='7D', on='date', closed='left').sum().reset_index(0, drop=True)
+
+## 6. COMPARISON OF FRAME TYPES
+
+# Example data with dates
+# df = pd.DataFrame({
+#     'date': pd.date_range('2024-01-01', periods=10),
+#     'value': [10, 20, 15, 25, 30, 35, 20, 40, 45, 50]
+# })
+
+# ROWS: Fixed number of rows (3 rows)
+df['rows_3'] = df['value'].rolling(window=3).sum()
+
+# RANGE: Time-based window (3 days)
+df['range_3d'] = df.set_index('date')['value'].rolling(window='3D').sum()
+
+# Full partition
+df['full_partition'] = df['value'].transform('sum')
+
+### EXPANDING WINDOW FUNCTIONS
+# SQL: SUM(value) OVER (PARTITION BY group ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
+df['expanding_sum'] = df.groupby('group')['value'].expanding().sum().reset_index(0, drop=True)
+df['expanding_avg'] = df.groupby('group')['value'].expanding().mean().reset_index(0, drop=True)
+
+### RANGE-BASED WINDOW FUNCTIONS
+# Custom window based on value range
+df['range_sum'] = df.groupby('group')['value'].rolling(window='7D', on='date').sum()
+
+### COMPLEX WINDOW EXAMPLES
+
+# Running difference from previous row
+df['diff_from_prev'] = df.groupby('group')['value'].diff()
+
+# Difference from first value in group
+df['diff_from_first'] = df.groupby('group')['value'].transform(lambda x: x - x.iloc[0])
+
+# Percentage change from previous row
+df['pct_change'] = df.groupby('group')['value'].pct_change()
+
+# Percentage of group total
+df['pct_of_total'] = df.groupby('group')['value'].transform(lambda x: x / x.sum())
+
+# Rank as percentage
+df['rank_pct'] = df.groupby('group')['value'].rank(pct=True)
+
+# Z-score within group
+df['z_score'] = df.groupby('group')['value'].transform(lambda x: (x - x.mean()) / x.std())
+
+# Moving average with groupby
+df['ma_3'] = df.groupby('group')['value'].transform(lambda x: x.rolling(3, min_periods=1).mean())
+
+# Exponential weighted moving average
+df['ewma'] = df.groupby('group')['value'].transform(lambda x: x.ewm(span=3).mean())
+
+================================================================================
+                        12. ADVANCED OPERATIONS
+================================================================================
+
+### EXPLODE
+df.explode(column, ignore_index=False)
+
+### EVAL & QUERY
+df.eval('new_col = col1 + col2', inplace=False)
+pd.eval('df1 + df2')
+
+### ASSIGN
+df.assign(new_col=lambda x: x['col1'] + x['col2'])
+df.assign(**{'new col': lambda x: x['col1'] * 2})
+
+### ITERATION
+df.iterrows()
+df.itertuples(index=True, name='Pandas')
+df.items()
+
+### SPARSE DATA
+pd.arrays.SparseArray(data, fill_value=None, dtype=None)
+df.astype(pd.SparseDtype('float', fill_value=0))
+
+### NULLABLE DTYPES
+pd.Int64Dtype()
+pd.StringDtype()
+pd.BooleanDtype()
+df['col'].astype('Int64')  # Nullable integer
+df['col'].astype('string')  # String with NA support
+df['col'].astype('boolean')  # Boolean with NA support
+
+### EXTENSION ARRAYS
+pd.array([1, 2, 3], dtype='Int64')
+
+================================================================================
+                        13. PLOTTING
+================================================================================
+
+### BASIC PLOTS
+df.plot(kind='line', x=None, y=None, ax=None, figsize=None, title=None)
+df.plot.line(x=None, y=None, **kwargs)
+df.plot.bar(x=None, y=None, **kwargs)
+df.plot.barh(x=None, y=None, **kwargs)
+df.plot.hist(bins=10, **kwargs)
+df.plot.box(**kwargs)
+df.plot.kde(**kwargs)
+df.plot.density(**kwargs)
+df.plot.area(**kwargs)
+df.plot.pie(y=None, **kwargs)
+df.plot.scatter(x, y, s=None, c=None, **kwargs)
+df.plot.hexbin(x, y, C=None, gridsize=100, **kwargs)
+
+### ADVANCED PLOTS
+pd.plotting.scatter_matrix(df, figsize=None, **kwargs)
+pd.plotting.andrews_curves(df, class_column, **kwargs)
+pd.plotting.parallel_coordinates(df, class_column, **kwargs)
+pd.plotting.lag_plot(series, lag=1, **kwargs)
+pd.plotting.autocorrelation_plot(series, **kwargs)
+pd.plotting.bootstrap_plot(series, fig=None, size=50, samples=500, **kwargs)
+pd.plotting.radviz(df, class_column, **kwargs)
+
+================================================================================
+                        14. PERFORMANCE & OPTIMIZATION
+================================================================================
+
+### MEMORY OPTIMIZATION
+df.memory_usage(deep=True)
+df['col'].memory_usage(deep=True)
+df.info(memory_usage='deep')
+
+### CHUNKING
+pd.read_csv(filepath, chunksize=10000)
+for chunk in pd.read_csv(filepath, chunksize=10000):
+    process(chunk)
+
+### VECTORIZATION
+df['new'] = df['col1'] + df['col2']  # Vectorized
+df['new'] = df.apply(lambda x: x['col1'] + x['col2'], axis=1)  # Slower
+
+### EFFICIENT OPERATIONS
+df.eval('new = col1 + col2')  # Faster than standard operations
+df.query('col > 5')  # Faster than boolean indexing
+
+### COPY VS VIEW
+df.copy(deep=True)
+df.copy(deep=False)
+df.is_copy
+
+================================================================================
+                        15. UTILITY FUNCTIONS
+================================================================================
+
+### TESTING
+pd.testing.assert_frame_equal(left, right)
+pd.testing.assert_series_equal(left, right)
+pd.testing.assert_index_equal(left, right)
+
+### OPTIONS & SETTINGS
+pd.options.display.max_rows
+pd.options.display.max_columns
+pd.options.mode.chained_assignment
+pd.describe_option()
+pd.reset_option('all')
+
+### INFORMATION
+pd.__version__
+pd.show_versions()
+
+### MISCELLANEOUS
+pd.get_dummies(data, prefix=None, drop_first=False, dtype=None)
+pd.factorize(values, sort=False, na_sentinel=-1)
+pd.unique(values)
+pd.wide_to_long(df, stubnames, i, j, sep='', suffix='\\d+')
+pd.infer_freq(index)
+pd.interval_range(start=0, end=5, periods=None, freq=None, closed='right')
+
+================================================================================
+                        16. COMMON PATTERNS FOR PANDAS PROBLEMS
+================================================================================
+
+# Patterns organized by difficulty level: EASY → MEDIUM → HARD
+
+================================================================================
+                        EASY PATTERNS
+================================================================================
+
+### PATTERN 1: Filter and Select
+# Problem: Find all rows where column meets a condition
+df[df['age'] > 30]
+df[df['name'].str.contains('John')]
+df.query('age > 30 and salary > 50000')
+
+### PATTERN 2: Group and Count
+# Problem: Count occurrences by category
+df.groupby('category').size()
+df.groupby('category')['id'].count()
+df['category'].value_counts()
+
+### PATTERN 3: Sort and Rank
+# Problem: Find top N values
+df.nlargest(5, 'salary')
+df.sort_values('date', ascending=False).head(10)
+df.groupby('dept')['salary'].rank(ascending=False)
+
+### PATTERN 4: Basic Aggregation
+# Problem: Calculate simple statistics by group
+df.groupby('category')['value'].sum()
+df.groupby('dept').agg({'salary': 'mean', 'age': 'max'})
+df.groupby('category').agg(['sum', 'mean', 'count'])
+
+### PATTERN 5: Column Operations
+# Problem: Create new column based on existing ones
+df['total'] = df['price'] * df['quantity']
+df['full_name'] = df['first_name'] + ' ' + df['last_name']
+df['bonus'] = df['salary'] * 0.1
+
+### PATTERN 6: Fill Missing Values
+# Problem: Handle NaN values
+df.fillna(0)
+df.fillna({'col1': 0, 'col2': 'Unknown'})
+df['col'].fillna(df['col'].mean())
+
+### PATTERN 7: Date Extraction
+# Problem: Extract date components
+df['year'] = pd.to_datetime(df['date']).dt.year
+df['month'] = df['date'].dt.month
+df['day_name'] = df['date'].dt.day_name()
+
+### PATTERN 8: String Operations
+# Problem: Clean and transform text
+df['name'] = df['name'].str.strip().str.title()
+df['email'] = df['email'].str.lower()
+df['code'] = df['text'].str.extract(r'(\d+)')
+
+================================================================================
+                        MEDIUM PATTERNS
+================================================================================
+
+### PATTERN 1: Conditional Column Creation
+# Problem: Create column based on multiple conditions
+df['category'] = np.where(df['value'] > 100, 'High', 'Low')
+df['tier'] = pd.cut(df['score'], bins=[0, 50, 75, 100], labels=['Low', 'Mid', 'High'])
+df['status'] = df['amount'].apply(lambda x: 'Paid' if x > 0 else 'Pending')
+
+### PATTERN 2: Multiple Group Aggregations
+# Problem: Complex groupby with multiple operations
+df.groupby(['dept', 'year']).agg({
+    'salary': ['mean', 'sum', 'count'],
+    'age': 'mean',
+    'bonus': 'sum'
+}).reset_index()
+
+### PATTERN 3: Pivot and Reshape
+# Problem: Convert long to wide format
+df.pivot_table(index='date', columns='category', values='amount', aggfunc='sum')
+df.groupby(['date', 'category'])['value'].sum().unstack(fill_value=0)
+
+### PATTERN 4: Cumulative Calculations
+# Problem: Running totals and differences
+df['cumsum'] = df.groupby('id')['amount'].cumsum()
+df['diff'] = df.groupby('id')['value'].diff()
+df['pct_change'] = df.groupby('id')['value'].pct_change()
+
+### PATTERN 5: Join and Merge
+# Problem: Combine data from multiple sources
+pd.merge(df1, df2, on='id', how='left')
+pd.merge(df1, df2, left_on='user_id', right_on='id', how='inner')
+df1.merge(df2, on=['id', 'date'], suffixes=('_left', '_right'))
+
+### PATTERN 6: Filter with Multiple Conditions
+# Problem: Complex filtering logic
+df[(df['age'] > 30) & (df['salary'] > 50000) & (df['dept'].isin(['IT', 'Sales']))]
+df.query('age > 30 and (dept == "IT" or dept == "Sales")')
+df[df.apply(lambda x: x['salary'] > x['age'] * 1000, axis=1)]
+
+### PATTERN 7: Window Functions (LAG/LEAD)
+# Problem: Compare with previous/next row
+df['prev_value'] = df.groupby('id')['value'].shift(1)
+df['next_value'] = df.groupby('id')['value'].shift(-1)
+df['change'] = df['value'] - df['prev_value']
+
+### PATTERN 8: Rolling Calculations
+# Problem: Moving averages and rolling sums
+df['ma_7'] = df.groupby('id')['value'].rolling(window=7).mean().reset_index(0, drop=True)
+df['rolling_sum'] = df['value'].rolling(window=3).sum()
+df['rolling_max'] = df.groupby('category')['value'].rolling(5).max().reset_index(0, drop=True)
+
+### PATTERN 9: Ranking within Groups
+# Problem: Rank items within categories
+df['rank'] = df.groupby('category')['score'].rank(method='dense', ascending=False)
+df['row_num'] = df.groupby('dept').cumcount() + 1
+df['percentile'] = df.groupby('group')['value'].rank(pct=True)
+
+### PATTERN 10: Date Filtering
+# Problem: Filter by date ranges
+df[df['date'].between('2024-01-01', '2024-12-31')]
+df[df['date'] > pd.Timestamp('2024-01-01')]
+df[(df['date'].dt.year == 2024) & (df['date'].dt.month.isin([1, 2, 3]))]
+
+================================================================================
+                        HARD PATTERNS
+================================================================================
+
+### PATTERN 1: Advanced Window Functions
+# Problem: Complex partitioned calculations
+df['running_total'] = df.groupby(['dept', 'year'])['amount'].cumsum()
+df['avg_last_3'] = df.groupby('id')['value'].transform(lambda x: x.rolling(3, min_periods=1).mean())
+df['z_score'] = df.groupby('category')['value'].transform(lambda x: (x - x.mean()) / x.std())
+
+### PATTERN 2: Self Join Pattern
+# Problem: Compare rows within same DataFrame
+df_merged = pd.merge(df, df,
+                     left_on='manager_id',
+                     right_on='employee_id',
+                     suffixes=('_emp', '_mgr'))
+
+# Finding duplicates with self-join
+duplicates = pd.merge(df, df, on='email', suffixes=('_1', '_2'))
+duplicates = duplicates[duplicates['id_1'] < duplicates['id_2']]
+
+### PATTERN 3: Custom Aggregation Functions
+# Problem: Apply complex custom logic in groupby
+def custom_agg(x):
+    return pd.Series({
+        'total': x.sum(),
+        'count': x.count(),
+        'weighted_avg': (x * df.loc[x.index, 'weight']).sum() / df.loc[x.index, 'weight'].sum()
+    })
+
+result = df.groupby('category')['value'].apply(custom_agg)
+
+### PATTERN 4: Conditional Aggregation
+# Problem: Sum/count with conditions
+df.groupby('dept').apply(lambda x: (x['salary'] > 50000).sum())
+df.groupby('category').agg({
+    'value': lambda x: x[x > 0].sum(),
+    'count': lambda x: (x > 100).sum()
+})
+
+### PATTERN 5: Multi-level Pivoting
+# Problem: Create complex pivot tables
+df.pivot_table(
+    index=['year', 'quarter'],
+    columns=['dept', 'category'],
+    values='amount',
+    aggfunc=['sum', 'mean'],
+    fill_value=0
+)
+
+### PATTERN 6: Gap and Island Problem
+# Problem: Find consecutive sequences
+df['group'] = (df['value'].diff() != 1).cumsum()
+result = df.groupby('group').agg({
+    'value': ['first', 'last', 'count']
+})
+
+# Alternative for date gaps
+df['date_diff'] = df['date'].diff().dt.days
+df['island'] = (df['date_diff'] > 1).cumsum()
+
+### PATTERN 7: Advanced Merging (Multiple Keys with Conditions)
+# Problem: Join with date ranges
+def merge_with_date_range(df1, df2):
+    result = pd.merge(df1.assign(key=1), df2.assign(key=1), on='key')
+    result = result[
+        (result['date_x'] >= result['start_date_y']) &
+        (result['date_x'] <= result['end_date_y'])
+    ]
+    return result.drop('key', axis=1)
+
+### PATTERN 8: Hierarchical/Nested Grouping
+# Problem: Group within groups
+df.groupby('dept').apply(
+    lambda x: x.nlargest(3, 'salary')[['name', 'salary']]
+).reset_index(drop=True)
+
+# Top N per group
+df.groupby('category', group_keys=False).apply(lambda x: x.nlargest(5, 'value'))
+
+### PATTERN 9: Forward Fill with Conditions
+# Problem: Conditional propagation
+mask = df['type'] == 'A'
+df.loc[mask, 'value'] = df.loc[mask, 'value'].ffill()
+
+# Group-wise forward fill with limit
+df['filled'] = df.groupby('id')['value'].ffill(limit=2)
+
+### PATTERN 10: Recursive Calculations
+# Problem: Iterative cumulative calculations
+def recursive_calc(row, prev_value):
+    return row['value'] + prev_value * 0.9
+
+df['recursive'] = 0
+for idx in df.index[1:]:
+    df.loc[idx, 'recursive'] = recursive_calc(df.loc[idx], df.loc[idx-1, 'recursive'])
+
+### PATTERN 11: Multiple Simultaneous Aggregations
+# Problem: Different aggregations for different subsets
+result = pd.concat([
+    df[df['type'] == 'A'].groupby('category')['value'].sum().rename('sum_A'),
+    df[df['type'] == 'B'].groupby('category')['value'].mean().rename('avg_B'),
+    df.groupby('category')['value'].count().rename('total_count')
+], axis=1)
+
+### PATTERN 12: Moving Window with Custom Logic
+# Problem: Complex rolling calculations
+def custom_rolling(window):
+    if len(window) < 3:
+        return np.nan
+    return (window.max() - window.min()) / window.mean()
+
+df['custom_metric'] = df['value'].rolling(5).apply(custom_rolling)
+
+### PATTERN 13: Multi-index Reshaping
+# Problem: Complex data restructuring
+df_multi = df.set_index(['date', 'category', 'product'])
+df_unstacked = df_multi.unstack(level=[1, 2])
+df_stacked = df_unstacked.stack(level=[0, 1])
+
+### PATTERN 14: Conditional Groupby
+# Problem: Different grouping based on conditions
+def conditional_group(df):
+    if df['year'].iloc[0] == 2024:
+        return df.groupby('month')['value'].sum()
+    else:
+        return df.groupby('quarter')['value'].sum()
+
+result = df.groupby('year').apply(conditional_group)
+
+### PATTERN 15: Handling Time Series Gaps
+# Problem: Fill missing dates with logic
+date_range = pd.date_range(start=df['date'].min(), end=df['date'].max(), freq='D')
+df_complete = df.set_index('date').reindex(date_range)
+df_complete['value'] = df_complete['value'].interpolate(method='linear')
+
+### PATTERN 16: Explode and Aggregate
+# Problem: Work with nested/list columns
+df_exploded = df.explode('tags')
+result = df_exploded.groupby('tags')['user_id'].nunique()
+
+### PATTERN 17: Performance Optimization Pattern
+# Problem: Optimize slow operations
+# Use categorical for repeated strings
+df['category'] = df['category'].astype('category')
+
+# Use eval for complex calculations
+df.eval('result = (col1 + col2) * col3 / col4', inplace=True)
+
+# Vectorize instead of apply
+df['result'] = np.where(df['value'] > 100, df['val1'], df['val2'])  # Fast
+# df['result'] = df.apply(lambda x: x['val1'] if x['value'] > 100 else x['val2'], axis=1)  # Slow
+
+### PATTERN 18: Handling Duplicates with Priority
+# Problem: Keep specific duplicate based on conditions
+df_sorted = df.sort_values(['id', 'priority', 'date'], ascending=[True, True, False])
+df_dedup = df_sorted.drop_duplicates(subset='id', keep='first')
+
+### PATTERN 19: Cross Join Pattern
+# Problem: Generate all combinations
+df1_cross = df1.assign(key=1)
+df2_cross = df2.assign(key=1)
+cross_join = pd.merge(df1_cross, df2_cross, on='key').drop('key', axis=1)
+
+### PATTERN 20: Percentile-based Filtering
+# Problem: Filter outliers using percentiles
+q_low = df['value'].quantile(0.05)
+q_high = df['value'].quantile(0.95)
+df_filtered = df[(df['value'] >= q_low) & (df['value'] <= q_high)]
+
+# Group-wise percentile filtering
+df['percentile'] = df.groupby('category')['value'].rank(pct=True)
+df_top_10pct = df[df['percentile'] >= 0.90]
+
+================================================================================
+                        PROBLEM-SOLVING WORKFLOW
+================================================================================
+
+# Step 1: Understand the Problem
+# - What is the input format?
+# - What is the expected output?
+# - Are there any edge cases?
+
+# Step 2: Data Exploration
+df.head()
+df.info()
+df.describe()
+df.isnull().sum()
+
+# Step 3: Choose the Pattern
+# - Filtering → Use boolean indexing or query()
+# - Aggregation → Use groupby() + agg()
+# - Transformation → Use apply() or transform()
+# - Reshaping → Use pivot(), melt(), stack()
+# - Joining → Use merge() or join()
+
+# Step 4: Optimize
+# - Use vectorized operations
+# - Avoid apply() when possible
+# - Use query() for complex filtering
+# - Use categorical data type
+# - Profile with %%timeit
+
+# Step 5: Validate
+# - Check for null values
+# - Verify data types
+# - Test edge cases
+# - Compare with expected output
+
+================================================================================
+                        16. BEST PRACTICES
+================================================================================
+
+# Use vectorized operations instead of loops
+# Use .loc and .iloc for explicit indexing
+# Use .query() for complex filtering
+# Use .eval() for efficient calculations
+# Avoid chained indexing (df[col][row])
+# Use .copy() when modifying subset to avoid SettingWithCopyWarning
+# Use categorical data type for repeated strings
+# Use appropriate dtypes to save memory
+# Use chunking for large files
+# Use .pipe() for method chaining
+# Profile code with %%timeit in Jupyter
+
+================================================================================
+                        END OF REFERENCE GUIDE
+================================================================================
+
+# For more information, visit:
+# Official Documentation: https://pandas.pydata.org/docs/
+# API Reference: https://pandas.pydata.org/docs/reference/index.html
+# User Guide: https://pandas.pydata.org/docs/user_guide/index.html
