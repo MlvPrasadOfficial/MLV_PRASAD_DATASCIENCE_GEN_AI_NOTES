@@ -1,6 +1,31 @@
 # Pandas - Complete Functions Reference Guide
 
 ================================================================================
+                                TABLE OF CONTENTS
+================================================================================
+
+1.  DATA STRUCTURES
+2.  DATA INPUT/OUTPUT
+3.  DATA INSPECTION & INFORMATION
+4.  DATA SELECTION & INDEXING
+5.  DATA FILTERING
+6.  DATA MANIPULATION & TRANSFORMATION
+7.  SORTING & RANKING
+8.  GROUPBY & AGGREGATION
+9.  MERGING, JOINING & CONCATENATION
+10. MULTI-INDEX (HIERARCHICAL INDEXING)
+11. SQL WINDOW FUNCTIONS IN PANDAS
+12. ADVANCED OPERATIONS
+13. TIME SERIES OPERATIONS
+14. STRING OPERATIONS
+15. UTILITY FUNCTIONS
+16. COMMON PATTERNS FOR PANDAS PROBLEMS
+    - Easy Patterns
+    - Medium Patterns
+    - Hard Patterns
+    - Problem-Solving Workflow
+
+================================================================================
                         PANDAS CORE FUNCTIONALITY
 ================================================================================
 
