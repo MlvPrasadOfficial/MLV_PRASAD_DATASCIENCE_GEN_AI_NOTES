@@ -1,0 +1,8 @@
+# Ignore all files
+*
+
+# Except pandas.txt
+!pandas.txt
+
+# Don't ignore .gitignore itself
+!.gitignore
