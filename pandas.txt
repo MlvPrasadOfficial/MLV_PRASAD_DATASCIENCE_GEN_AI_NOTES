@@ -1091,27 +1091,4 @@ df.isnull().sum()
 # - Test edge cases
 # - Compare with expected output
 
-================================================================================
-                        16. BEST PRACTICES
-================================================================================
 
-# Use vectorized operations instead of loops
-# Use .loc and .iloc for explicit indexing
-# Use .query() for complex filtering
-# Use .eval() for efficient calculations
-# Avoid chained indexing (df[col][row])
-# Use .copy() when modifying subset to avoid SettingWithCopyWarning
-# Use categorical data type for repeated strings
-# Use appropriate dtypes to save memory
-# Use chunking for large files
-# Use .pipe() for method chaining
-# Profile code with %%timeit in Jupyter
-
-================================================================================
-                        END OF REFERENCE GUIDE
-================================================================================
-
-# For more information, visit:
-# Official Documentation: https://pandas.pydata.org/docs/
-# API Reference: https://pandas.pydata.org/docs/reference/index.html
-# User Guide: https://pandas.pydata.org/docs/user_guide/index.html
